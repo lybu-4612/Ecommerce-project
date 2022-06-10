@@ -60,12 +60,15 @@ def register(request):
                 'token': default_token_generator.make_token(user),
                 
             })
-            to_email = email
-            send_email = EmailMessage(mail_subject, message, to =[to_email])
-            send_email.send()
+            # to_email = email
+            # send_email = EmailMessage(mail_subject, message, to =[to_email])
+            # send_email.send()
+            user_profile = UserProfile.objects.create(user=user)
+            user_profile.save()
             
             messages.success(request, 'Registration successful.')
-            return redirect('/accounts/login/?command-verification&email='+email)
+            return redirect('login')
+            # return redirect('/accounts/login/?command-verification&email='+email)
     else:
         form = RegistrationForm
     context = {
