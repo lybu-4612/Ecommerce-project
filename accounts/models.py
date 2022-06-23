@@ -28,12 +28,11 @@ class MyAccountManager(BaseUserManager):
             
             email= email,
             username= username,
-            password=password,
             first_name=first_name,
             last_name=last_name
             
         )
-        
+        user.set_password(password)
         user.is_admin = True
         user.is_active =True
         user.is_staff = True
@@ -63,7 +62,7 @@ class Account(AbstractBaseUser):
     
     USERNAME_FIELD ='email'
     
-    REQUIRED_FIELDS = ['username', 'password', 'first_name', 'last_name']
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
     
     objects = MyAccountManager()
     
@@ -76,7 +75,7 @@ class Account(AbstractBaseUser):
     
     def has_perm(self, perm, obj=None):
         return self.is_admin
-    
+        
     
     def has_module_perms(self,add_label):
         return True
